@@ -8,5 +8,5 @@ func main() {
 
 	HandleVersionFlag()
 
-	fmt.Println("hello world again agian")
+	fmt.Println("hello world again agian again")
 }
