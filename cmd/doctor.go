@@ -21,8 +21,21 @@ func checkCommand(name string, arg string) {
 	cmd := exec.Command(name, arg)
 	output, err := cmd.Output()
 	if err != nil {
-		fmt.Printf("\033[31m%s未安装或无法执行%s命令\033[0m\n", name, name) // 红色
+		printColored(fmt.Sprintf("%s未安装或无法执行%s命令", name, name), "red")
 	} else {
-		fmt.Printf("\033[32m%s版本: %s\033[0m\n", name, output) // 绿色
+		printColored(fmt.Sprintf("%s版本: %s", name, output), "green")
 	}
+}
+
+func printColored(message string, color string) {
+	var colorCode string
+	switch color {
+	case "red":
+		colorCode = "\033[31m"
+	case "green":
+		colorCode = "\033[32m"
+	default:
+		colorCode = "\033[0m"
+	}
+	fmt.Printf("%s%s\033[0m\n", colorCode, message)
 }
