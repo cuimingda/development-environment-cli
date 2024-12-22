@@ -13,6 +13,9 @@ func main() {
 		case "doctor":
 			HandleDoctorCommand()
 			return
+		case "web":
+			HandleWebCommand(os.Args[2:])
+			return
 		}
 	}
 
