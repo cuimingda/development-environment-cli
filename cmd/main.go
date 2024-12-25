@@ -16,13 +16,6 @@ const version = "1.0.0"
 
 func main() {
 
-	fatalIfNotExistDir(".git")
-	fatalIfNotExistDir(".vscode")
-	fatalIfNotExistCommand("code")
-	fatalIfNotExistCommand("git")
-	fatalIfNotExistCommand("docker")
-	fatalIfNotExistCommand("mkdir")
-
 	debugOsArgs()
 
 	if len(os.Args) > 1 {
@@ -46,6 +39,13 @@ func main() {
 }
 
 func handleOpenCommand() {
+
+	fatalIfNotExistCommand("code")
+	fatalIfNotExistCommand("git")
+	fatalIfNotExistCommand("gh")
+	fatalIfNotExistCommand("docker")
+	fatalIfNotExistCommand("mkdir")
+
 	openCmd := flag.NewFlagSet("open", flag.ExitOnError)
 	openCmd.Parse(os.Args[2:])
 
@@ -189,6 +189,15 @@ func getWorkingDirName() string {
 
 func handleDevCommand() {
 
+	fatalIfNotExistDir(".git")
+	fatalIfNotExistDir(".vscode")
+
+	fatalIfNotExistCommand("code")
+	fatalIfNotExistCommand("git")
+	fatalIfNotExistCommand("gh")
+	fatalIfNotExistCommand("docker")
+	fatalIfNotExistCommand("mkdir")
+
 	workingDir := getWorkingDirOrFatal()
 	dirName := getWorkingDirName()
 
@@ -212,6 +221,15 @@ func handleDevCommand() {
 }
 
 func HandleWebCommand(args []string) {
+
+	fatalIfNotExistCommand("code")
+	fatalIfNotExistCommand("git")
+	fatalIfNotExistCommand("gh")
+	fatalIfNotExistCommand("docker")
+	fatalIfNotExistCommand("mkdir")
+
+	fatalIfNotExistDir(".git")
+	fatalIfNotExistDir(".vscode")
 
 	webCmd := flag.NewFlagSet("web", flag.ExitOnError)
 	port := webCmd.String("port", "5173", "端口号")
