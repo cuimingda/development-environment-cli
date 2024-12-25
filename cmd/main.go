@@ -14,9 +14,14 @@ const version = "1.0.0"
 
 func main() {
 
-	debugOsArgs()
 	fatalIfNotExistDir(".git")
 	fatalIfNotExistDir(".vscode")
+	fatalIfNotExistCommand("code")
+	fatalIfNotExistCommand("git")
+	fatalIfNotExistCommand("docker")
+	fatalIfNotExistCommand("mkdir")
+
+	debugOsArgs()
 
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
@@ -35,6 +40,20 @@ func main() {
 	}
 
 	handleDevCommand()
+}
+
+// CheckCommandInstalled 检查命令是否已安装
+func CheckCommandInstalled(command string) bool {
+	_, err := exec.LookPath(command)
+	return err == nil
+}
+
+func fatalIfNotExistCommand(command string) {
+	if !CheckCommandInstalled(command) {
+		message := fmt.Sprintf("[ERROR] %s 未安装或无法执行 %s 命令", command, command)
+		colorizeMessage := colorize(message, "red")
+		log.Fatalln(colorizeMessage)
+	}
 }
 
 func debugOsArgs() {
