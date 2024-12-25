@@ -32,9 +32,7 @@ func main() {
 			HandleWebCommand(os.Args[2:])
 			return
 		default:
-			message := fmt.Sprintf("[ERROR] 未知命令 - %s", os.Args[1])
-			colorizeMessage := colorize(message, "red")
-			log.Fatalln(colorizeMessage)
+			fatalWithFormatMessage("[ERROR] 未知命令 - %s", os.Args[1])
 			return
 		}
 	}
@@ -50,10 +48,16 @@ func CheckCommandInstalled(command string) bool {
 
 func fatalIfNotExistCommand(command string) {
 	if !CheckCommandInstalled(command) {
-		message := fmt.Sprintf("[ERROR] %s 未安装或无法执行 %s 命令", command, command)
-		colorizeMessage := colorize(message, "red")
-		log.Fatalln(colorizeMessage)
+		fatalWithFormatMessage("[ERROR] %s 未安装或无法执行 %s 命令", command, command)
 	}
+}
+
+func fatalWithFormatMessage(format string, args ...interface{}) {
+	color := "\033[31m"
+	reset := "\033[0m"
+	message := fmt.Sprintf(format, args...)
+	fmt.Printf("[FATAL] %s%s%s\n", color, message, reset)
+	os.Exit(1)
 }
 
 func debugOsArgs() {
@@ -68,9 +72,7 @@ func debugOsArgs() {
 func fatalIfNotExistDir(dir string) {
 	_, err := os.Stat(dir)
 	if os.IsNotExist(err) {
-		message := fmt.Sprintf("[ERROR] 当前目录没有 %s 目录，终止执行", dir)
-		colorizeMessage := colorize(message, "red")
-		log.Fatalln(colorizeMessage)
+		fatalWithFormatMessage("[ERROR] 当前目录没有 %s 目录，终止执行", dir)
 	}
 }
 
