@@ -16,7 +16,9 @@ const version = "1.0.0"
 
 func main() {
 
-	debugOsArgs()
+	if isDebug() {
+		debugOsArgs()
+	}
 
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
@@ -36,6 +38,32 @@ func main() {
 	}
 
 	handleDevCommand()
+}
+
+func isVerbose() bool {
+	for _, arg := range os.Args {
+		if arg == "-V" {
+			return true
+		}
+		lowerArg := strings.ToLower(arg)
+		if lowerArg == "--verbose" || lowerArg == "-verbose" {
+			return true
+		}
+	}
+	return false
+}
+
+func isDebug() bool {
+	for _, arg := range os.Args {
+		if arg == "-D" {
+			return true
+		}
+		lowerArg := strings.ToLower(arg)
+		if lowerArg == "--debug" || lowerArg == "-debug" {
+			return true
+		}
+	}
+	return false
 }
 
 func handleOpenCommand() {
