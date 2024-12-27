@@ -229,8 +229,8 @@ func handleDevCommand() {
 	workingDir := getWorkingDirOrFatal()
 	dirName := getWorkingDirName()
 
-	cmd := exec.Command(
-		"docker", "run",
+	executeCommand(
+		"docker1", "run",
 		"-it",
 		"--rm",
 		"-w", "/app",
@@ -238,15 +238,6 @@ func handleDevCommand() {
 		"--name", dirName+"-container",
 		"cuimingda/development-environment",
 	)
-
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("运行 Alpine Linux 容器失败: %v", err)
-	}
 }
 
 func HandleWebCommand(args []string) {
@@ -269,7 +260,7 @@ func HandleWebCommand(args []string) {
 	dirName := getWorkingDirName()
 
 	log.Printf("端口号: %s", *port)
-	cmd := exec.Command(
+	executeCommand(
 		"docker", "run",
 		"-it",
 		"--rm",
@@ -280,15 +271,6 @@ func HandleWebCommand(args []string) {
 		"--name", dirName+"-container",
 		"cuimingda/development-environment",
 	)
-
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("运行 Alpine Linux 容器失败: %v", err)
-	}
 }
 
 func HandleDoctorCommand() {
@@ -354,6 +336,6 @@ func HandleVersionFlag() {
 
 	if showVersion {
 		fmt.Println("development-environment-cli 版本:", version)
-		os.Exit(0)
+		exitSucceed()
 	}
 }
