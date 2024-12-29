@@ -32,6 +32,9 @@ func main() {
 		case "web":
 			HandleWebCommand(os.Args[2:])
 			return
+		case "build-self":
+			BuildSelfCommand()
+			return
 		default:
 			fatalWithFormatMessage("[ERROR] 未知命令 - %s", os.Args[1])
 			return
@@ -191,10 +194,10 @@ func debugOsArgs() {
 	}
 }
 
-func fatalIfNotExistDir(dir string) {
-	_, err := os.Stat(dir)
+func fatalIfNotExistPath(path string) {
+	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		fatalWithFormatMessage("[ERROR] 当前目录没有 %s 目录，终止执行", dir)
+		fatalWithFormatMessage("[ERROR] 当前目录没有 %s ，终止执行", path)
 	}
 }
 
@@ -222,8 +225,8 @@ func handleDevCommand() {
 
 	fatalIfNotMacOS()
 
-	fatalIfNotExistDir(".git")
-	fatalIfNotExistDir(".vscode")
+	fatalIfNotExistPath(".git")
+	fatalIfNotExistPath(".vscode")
 
 	fatalIfNotExistCommand("code")
 	fatalIfNotExistCommand("git")
@@ -255,8 +258,8 @@ func HandleWebCommand(args []string) {
 	fatalIfNotExistCommand("docker")
 	fatalIfNotExistCommand("mkdir")
 
-	fatalIfNotExistDir(".git")
-	fatalIfNotExistDir(".vscode")
+	fatalIfNotExistPath(".git")
+	fatalIfNotExistPath(".vscode")
 
 	webCmd := flag.NewFlagSet("web", flag.ExitOnError)
 	port := webCmd.String("port", "5173", "端口号")
