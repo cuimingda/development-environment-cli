@@ -7,9 +7,7 @@ RUN git clone "https://github.com/cuimingda/development-environment-cli.git" "/t
     cd /tmp/development-environment-cli && \
     mkdir -p bin && \
     go build -o bin/dev ./cmd && \
-    ln -sf $(pwd)/bin/dev /usr/local/bin/dev && \
-    cd / && \
-    rm -rf /tmp/development-environment-cli
+    ln -sf $(pwd)/bin/dev /usr/local/bin/dev
 
 COPY ./scripts/docker/entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
