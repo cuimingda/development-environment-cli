@@ -14,3 +14,10 @@ run web with port
 ```
 go run ./cmd web --port 5173
 ```
+
+## Publish
+```sh
+docker login
+docker build --tag cuimingda/development-environment:latest .
+docker push cuimingda/development-environment:latest
+```
