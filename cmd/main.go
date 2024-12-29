@@ -11,40 +11,76 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+
+	"github.com/spf13/cobra"
 )
 
 const version = "1.0.0"
 
 func main() {
 
-	if isDebug() {
-		debugOsArgs()
+	// if isDebug() {
+	// 	debugOsArgs()
+	// }
+
+	var rootCmd = &cobra.Command{
+		Use:   "dev",
+		Short: "这是一个示例应用程序",
+		Long:  `这是一个使用 Cobra 库创建的示例应用程序。`,
 	}
 
-	if len(os.Args) > 1 {
-		switch os.Args[1] {
-		case "versions":
+	var versionsCmd = &cobra.Command{
+		Use:   "versions",
+		Short: "显示版本信息",
+		Run: func(cmd *cobra.Command, args []string) {
 			HandleVersionsCommand()
-			return
-		case "open":
-			handleOpenCommand()
-			return
-		case "web":
-			HandleWebCommand(os.Args[2:])
-			return
-		case "build-self":
-			BuildSelfCommand()
-			return
-		case ".":
-			handleDevCommand()
-			return
-		default:
-			fatalWithFormatMessage("[ERROR] 未知命令 - %s", os.Args[1])
-			return
-		}
+		},
 	}
 
-	printMessageLog("使用方法: dev [命令]")
+	var openCmd = &cobra.Command{
+		Use:   "open",
+		Short: "打开项目",
+		Run: func(cmd *cobra.Command, args []string) {
+			handleOpenCommand()
+		},
+	}
+
+	var webCmd = &cobra.Command{
+		Use:   "web",
+		Short: "启动Web服务",
+		Run: func(cmd *cobra.Command, args []string) {
+			HandleWebCommand(os.Args[2:])
+		},
+	}
+
+	var buildSelfCmd = &cobra.Command{
+		Use:   "build-self",
+		Short: "构建自身",
+		Run: func(cmd *cobra.Command, args []string) {
+			BuildSelfCommand()
+		},
+	}
+
+	var devCmd = &cobra.Command{
+		Use:   ".",
+		Short: "启动开发环境",
+		Run: func(cmd *cobra.Command, args []string) {
+			handleDevCommand()
+		},
+	}
+
+	rootCmd.AddCommand(
+		devCmd,
+		versionsCmd,
+		openCmd,
+		webCmd,
+		buildSelfCmd,
+	)
+
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 }
 
