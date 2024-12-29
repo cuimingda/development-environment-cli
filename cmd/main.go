@@ -35,13 +35,17 @@ func main() {
 		case "build-self":
 			BuildSelfCommand()
 			return
+		case ".":
+			handleDevCommand()
+			return
 		default:
 			fatalWithFormatMessage("[ERROR] 未知命令 - %s", os.Args[1])
 			return
 		}
 	}
 
-	handleDevCommand()
+	printMessageLog("使用方法: dev [命令]")
+
 }
 
 func isVerbose() bool {
