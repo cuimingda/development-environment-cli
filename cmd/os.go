@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 )
 
 func isAlpine() bool {
@@ -30,6 +31,19 @@ func fatalIfNotAlpine() {
 
 func fatalIfNotMacOS() {
 	fatalWithoutCondition(isMacOS(), "当前系统不是 MacOS")
+}
+
+func getCommandOutputOrFatal(name string, arg ...string) string {
+
+	fatalIfNotExistCommand(name)
+
+	cmd := exec.Command(name, arg...)
+	output, err := cmd.Output()
+	if err != nil {
+		fatalWithFormatMessage("Error getting %s output: %v", name, err)
+	}
+
+	return strings.TrimSpace(string(output))
 }
 
 func executeCommand(name string, args ...string) {

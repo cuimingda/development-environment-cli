@@ -5,18 +5,7 @@ import (
 	"strings"
 )
 
-func getCommandOutputOrFatal(name string, arg ...string) string {
 
-	fatalIfNotExistCommand(name)
-
-	cmd := exec.Command(name, arg...)
-	output, err := cmd.Output()
-	if err != nil {
-		fatalWithFormatMessage("Error getting %s output: %v", name, err)
-	}
-
-	return strings.TrimSpace(string(output))
-}
 
 func fatalIfNotGitRemote(url string) {
 	remoteURL := getCommandOutputOrFatal("git", "config", "--get", "remote.origin.url")
