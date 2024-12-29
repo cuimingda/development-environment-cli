@@ -23,9 +23,7 @@ func main() {
 	var versionsCmd = &cobra.Command{
 		Use:   "versions",
 		Short: "显示版本信息",
-		Run: func(cmd *cobra.Command, args []string) {
-			HandleVersionsCommand()
-		},
+		Run:   HandleVersionsCommand,
 	}
 
 	var openCmd = &cobra.Command{

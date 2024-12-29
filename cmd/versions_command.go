@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"os/exec"
 	"regexp"
+
+	"github.com/spf13/cobra"
 )
 
 func checkCommand(name string, arg string) {
@@ -34,15 +37,24 @@ func checkCommand(name string, arg string) {
 	printSuccess("%s: %s", name, version)
 }
 
-func HandleVersionsCommand() {
+func HandleVersionsCommand(cmd *cobra.Command, args []string) {
 
+	cmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
+
+	fmt.Println("检查命令版本信息...")
+	fmt.Println()
+	fmt.Println()
+	fmt.Printf("cmd %v", cmd)
+	fmt.Println()
+	fmt.Println()
+	fmt.Printf("args %v", args)
 	// 检查命令
-	checkCommand("docker", "--version")
-	checkCommand("git", "--version")
-	checkCommand("node", "--version")
-	checkCommand("npm", "--version")
-	checkCommand("curl", "--version")
-	checkCommand("gh", "--version")
-	checkCommand("go", "version")
-	checkCommand("go1", "version")
+	// checkCommand("docker", "--version")
+	// checkCommand("git", "--version")
+	// checkCommand("node", "--version")
+	// checkCommand("npm", "--version")
+	// checkCommand("curl", "--version")
+	// checkCommand("gh", "--version")
+	// checkCommand("go", "version")
+	// checkCommand("go1", "version")
 }
