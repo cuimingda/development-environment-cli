@@ -68,6 +68,8 @@ func isDebug() bool {
 
 func handleOpenCommand() {
 
+	fatalIfNotMacOS()
+
 	fatalIfNotExistCommand("code")
 	fatalIfNotExistCommand("git")
 	fatalIfNotExistCommand("gh")
@@ -217,6 +219,8 @@ func getWorkingDirName() string {
 
 func handleDevCommand() {
 
+	fatalIfNotMacOS()
+
 	fatalIfNotExistDir(".git")
 	fatalIfNotExistDir(".vscode")
 
@@ -241,6 +245,8 @@ func handleDevCommand() {
 }
 
 func HandleWebCommand(args []string) {
+
+	fatalIfNotMacOS()
 
 	fatalIfNotExistCommand("code")
 	fatalIfNotExistCommand("git")

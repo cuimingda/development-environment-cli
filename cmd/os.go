@@ -3,7 +3,34 @@ package main
 import (
 	"os"
 	"os/exec"
+	"runtime"
 )
+
+func isAlpine() bool {
+	if _, err := os.Stat("/etc/alpine-release"); err == nil {
+		return true
+	}
+	return false
+}
+
+func isMacOS() bool {
+	return runtime.GOOS == "darwin"
+}
+
+func fatalWithoutCondition(condition bool, message string) {
+	if !condition {
+		printMessageLog(message)
+		exitWithError()
+	}
+}
+
+func fatalIfNotAlpine() {
+	fatalWithoutCondition(isAlpine(), "当前系统不是 Alpine Linux")
+}
+
+func fatalIfNotMacOS() {
+	fatalWithoutCondition(isMacOS(), "当前系统不是 MacOS")
+}
 
 func executeCommand(name string, args ...string) {
 	cmd := exec.Command(name, args...)
