@@ -1,12 +1,5 @@
 package main
 
-import (
-	"os/exec"
-	"strings"
-)
-
-
-
 func fatalIfNotGitRemote(url string) {
 	remoteURL := getCommandOutputOrFatal("git", "config", "--get", "remote.origin.url")
 	fatalWithoutCondition(
