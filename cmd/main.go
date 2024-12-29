@@ -230,7 +230,7 @@ func handleDevCommand() {
 	dirName := getWorkingDirName()
 
 	executeCommand(
-		"docker1", "run",
+		"docker", "run",
 		"-it",
 		"--rm",
 		"-w", "/app",
