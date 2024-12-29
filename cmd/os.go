@@ -1,41 +1,37 @@
 package main
 
 import (
+	"log"
 	"os"
 	"os/exec"
-	"runtime"
+	"path/filepath"
+	"reflect"
 	"strings"
 )
 
-func isAlpine() bool {
-	if _, err := os.Stat("/etc/alpine-release"); err == nil {
-		return true
+func getWorkingDirOrFatal() string {
+	workingDir, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("获取当前工作目录失败: %v", err)
 	}
-	return false
+	log.Printf("当前工作目录: %s", workingDir)
+
+	return workingDir
 }
 
-func isMacOS() bool {
-	return runtime.GOOS == "darwin"
-}
+func getWorkingDirName() string {
+	workingDir := getWorkingDirOrFatal()
 
-func fatalWithoutCondition(condition bool, message string) {
-	if !condition {
-		printMessageLog(message)
-		exitWithError()
-	}
-}
+	// 获取当前工作目录的名称，类似于 shell 中的 basename
+	dirName := filepath.Base(workingDir)
+	log.Printf("当前目录名称: %s", dirName)
 
-func fatalIfNotAlpine() {
-	fatalWithoutCondition(isAlpine(), "当前系统不是 Alpine Linux")
-}
-
-func fatalIfNotMacOS() {
-	fatalWithoutCondition(isMacOS(), "当前系统不是 MacOS")
+	return dirName
 }
 
 func getCommandOutputOrFatal(name string, arg ...string) string {
 
-	fatalIfNotExistCommand(name)
+	ensureCommand(name)
 
 	cmd := exec.Command(name, arg...)
 	output, err := cmd.Output()
@@ -47,6 +43,8 @@ func getCommandOutputOrFatal(name string, arg ...string) string {
 }
 
 func executeCommand(name string, args ...string) {
+	ensureCommand(name)
+
 	cmd := exec.Command(name, args...)
 
 	cmd.Stdin = os.Stdin
@@ -65,4 +63,13 @@ func exitWithError() {
 
 func exitSucceed() {
 	os.Exit(0)
+}
+
+func debugOsArgs() {
+	log.Printf("typeof of os.Args - %s\n", reflect.TypeOf(os.Args))
+
+	log.Printf("len(os.Args) - %d", len(os.Args))
+	for i, arg := range os.Args {
+		log.Printf("os.Args[%d] - %s", i, arg)
+	}
 }
