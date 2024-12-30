@@ -1,26 +1,29 @@
 package cmd
 
 import (
+	"fmt"
+
 	"development-environment-cli/internal/utils"
-	"flag"
-	"log"
 
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(webCmd)
-}
+var port int
 
 var webCmd = &cobra.Command{
 	Use:   "web",
 	Short: "进入当前目录的web开发模式",
 	Run: func(cmd *cobra.Command, args []string) {
-		handleWebCommand(args)
+		handleWebCommand()
 	},
 }
 
-func handleWebCommand(args []string) {
+func init() {
+	rootCmd.AddCommand(webCmd)
+	webCmd.Flags().IntVarP(&port, "port", "p", 5173, "Web服务监听的端口号")
+}
+
+func handleWebCommand() {
 
 	utils.EnsureMacOS()
 
@@ -33,22 +36,17 @@ func handleWebCommand(args []string) {
 	utils.EnsurePath(".git")
 	utils.EnsurePath(".vscode")
 
-	webCmd := flag.NewFlagSet("web", flag.ExitOnError)
-	port := webCmd.String("port", "5173", "端口号")
-
-	webCmd.Parse(args)
-
 	workingDir := utils.GetWorkingDirOrFatal()
 	dirName := utils.GetWorkingDirName()
 
-	log.Printf("端口号: %s", *port)
+	publishConfig := fmt.Sprintf("%d:%d", port, port)
 	utils.ExecuteCommand(
 		"docker", "run",
 		"-it",
 		"--rm",
 		"-w", "/app",
 		"-v", workingDir+":/app",
-		"--publish", *port+":"+*port,
+		"--publish", publishConfig,
 		"--network", "local-network",
 		"--name", dirName+"-container",
 		"cuimingda/development-environment",
