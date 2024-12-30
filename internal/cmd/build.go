@@ -25,9 +25,9 @@ func init() {
 
 func handleBuildCommand() {
 
-	printVerboseMessage("开始构建")
+	utils.PrintVerboseMessage("开始构建")
 
-	if Verbose {
+	if utils.Verbose {
 		fmt.Printf("DisableLocalBinary: %v\n", DisableLocalBinary)
 		fmt.Printf("DisableDockerImage: %v\n", DisableDockerImage)
 	}
@@ -49,5 +49,5 @@ func handleBuildCommand() {
 		fmt.Println("跳过构建 Docker 镜像")
 	}
 
-	printVerboseMessage("构建完成")
+	utils.PrintVerboseMessage("构建完成")
 }

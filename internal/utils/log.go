@@ -6,6 +6,14 @@ import (
 	"os"
 )
 
+var Verbose bool
+
+func PrintVerboseMessage(message string) {
+	if Verbose {
+		log.Printf("[Verbose] %s", message)
+	}
+}
+
 func printMessageLog(message string) {
 	log.Println(message)
 }
