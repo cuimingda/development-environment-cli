@@ -1,3 +1,4 @@
+// 字符串处理函数
 package utils
 
 import "strings"

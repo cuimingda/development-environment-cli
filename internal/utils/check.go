@@ -1,4 +1,5 @@
 // 所有返回bool的检查类函数
+// 特征是以is开头，返回bool值
 package utils
 
 import (

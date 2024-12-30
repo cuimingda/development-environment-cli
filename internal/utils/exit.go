@@ -1,3 +1,4 @@
+// 语义化封装os.exit
 package utils
 
 import "os"
