@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ func isCommandAvailable(command string) bool {
 	return err == nil
 }
 
-func ensureCommand(command string) {
+func EnsureCommand(command string) {
 	ensure(
 		isCommandAvailable(command),
 		"[ERROR] %s 未安装",
@@ -32,7 +32,7 @@ func isPathAvailable(path string) bool {
 	return !os.IsNotExist(err)
 }
 
-func ensurePath(path string) {
+func EnsurePath(path string) {
 
 	ensure(
 		isPathAvailable(path),
@@ -45,7 +45,7 @@ func isAlpine() bool {
 	return isPathAvailable("/etc/alpine-release")
 }
 
-func ensureAlpine() {
+func EnsureAlpine() {
 	ensure(
 		isAlpine(),
 		"[ERROR] 当前系统不是 %s",
@@ -57,7 +57,7 @@ func isMacOS() bool {
 	return runtime.GOOS == "darwin"
 }
 
-func ensureMacOS() {
+func EnsureMacOS() {
 	ensure(
 		isMacOS(),
 		"[ERROR] 当前系统不是 %s",
@@ -66,11 +66,11 @@ func ensureMacOS() {
 }
 
 func isGitRemoteOrigin(expectedURL string) bool {
-	remoteURL := getCommandOutputOrFatal("git", "config", "--get", "remote.origin.url")
+	remoteURL := GetCommandOutputOrFatal("git", "config", "--get", "remote.origin.url")
 	return remoteURL == expectedURL
 }
 
-func ensureGitRemoteOrigin(url string) {
+func EnsureGitRemoteOrigin(url string) {
 	ensure(
 		isGitRemoteOrigin(url),
 		"[ERROR] 当前git项目的remote origin不是 %s",

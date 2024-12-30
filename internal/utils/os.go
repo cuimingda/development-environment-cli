@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"log"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func getWorkingDirOrFatal() string {
+func GetWorkingDirOrFatal() string {
 	workingDir, err := os.Getwd()
 	if err != nil {
 		log.Fatalf("获取当前工作目录失败: %v", err)
@@ -19,8 +19,8 @@ func getWorkingDirOrFatal() string {
 	return workingDir
 }
 
-func getWorkingDirName() string {
-	workingDir := getWorkingDirOrFatal()
+func GetWorkingDirName() string {
+	workingDir := GetWorkingDirOrFatal()
 
 	// 获取当前工作目录的名称，类似于 shell 中的 basename
 	dirName := filepath.Base(workingDir)
@@ -29,9 +29,9 @@ func getWorkingDirName() string {
 	return dirName
 }
 
-func getCommandOutputOrFatal(name string, arg ...string) string {
+func GetCommandOutputOrFatal(name string, arg ...string) string {
 
-	ensureCommand(name)
+	EnsureCommand(name)
 
 	cmd := exec.Command(name, arg...)
 	output, err := cmd.Output()
@@ -42,8 +42,8 @@ func getCommandOutputOrFatal(name string, arg ...string) string {
 	return strings.TrimSpace(string(output))
 }
 
-func executeCommand(name string, args ...string) {
-	ensureCommand(name)
+func ExecuteCommand(name string, args ...string) {
+	EnsureCommand(name)
 
 	cmd := exec.Command(name, args...)
 

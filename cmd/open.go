@@ -1,30 +1,47 @@
-package main
+package cmd
 
 import (
 	"bufio"
+
 	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"development-environment-cli/internal/utils"
+
+	"github.com/spf13/cobra"
 )
+
+func init() {
+	rootCmd.AddCommand(openCmd)
+}
+
+var openCmd = &cobra.Command{
+	Use:   "open",
+	Short: "进入当前目录的开发模式",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleOpenCommand()
+	},
+}
 
 func handleOpenCommand() {
 
-	ensureMacOS()
+	utils.EnsureMacOS()
 
-	ensureCommand("code")
-	ensureCommand("git")
-	ensureCommand("gh")
-	ensureCommand("docker")
-	ensureCommand("mkdir")
+	utils.EnsureCommand("code")
+	utils.EnsureCommand("git")
+	utils.EnsureCommand("gh")
+	utils.EnsureCommand("docker")
+	utils.EnsureCommand("mkdir")
 
 	openCmd := flag.NewFlagSet("open", flag.ExitOnError)
 	openCmd.Parse(os.Args[2:])
 
 	if openCmd.NArg() != 1 {
-		fatalWithMessage("open 命令有且只能有一个目录参数")
+		fmt.Println("open 命令有且只能有一个目录参数")
 	}
 
 	dir := openCmd.Arg(0)
