@@ -80,12 +80,12 @@ func EnsureGitRemoteOrigin(url string) {
 
 func fatalWithoutCondition(condition bool, message string) {
 	if !condition {
-		printMessageLog(message)
+		PrintErrorMessage(message)
 		exitWithError()
 	}
 }
 
-func printFormatLog(format string, args ...any) {
-	message := fmt.Sprintf(format, args...)
-	printMessageLog(message)
-}
+// func printFormatLog(format string, args ...any) {
+// 	message := fmt.Sprintf(format, args...)
+// 	printMessageLog(message)
+// }

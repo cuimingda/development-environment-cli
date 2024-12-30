@@ -10,20 +10,18 @@ import (
 
 var port int
 
-var webCmd = &cobra.Command{
+var webCommand = &cobra.Command{
 	Use:   "web",
 	Short: "进入当前目录的web开发模式",
-	Run: func(cmd *cobra.Command, args []string) {
-		handleWebCommand()
-	},
+	Run:   handleWebCommand,
 }
 
 func init() {
-	rootCmd.AddCommand(webCmd)
-	webCmd.Flags().IntVarP(&port, "port", "p", 5173, "Web服务监听的端口号")
+	rootCommand.AddCommand(webCommand)
+	webCommand.Flags().IntVarP(&port, "port", "p", 5173, "Web服务监听的端口号")
 }
 
-func handleWebCommand() {
+func handleWebCommand(cmd *cobra.Command, args []string) {
 
 	utils.EnsureMacOS()
 

@@ -36,7 +36,7 @@ func GetCommandOutputOrFatal(name string, arg ...string) string {
 	cmd := exec.Command(name, arg...)
 	output, err := cmd.Output()
 	if err != nil {
-		fatalWithFormatMessage("Error getting %s output: %v", name, err)
+		FatalWithFormatMessage("Error getting %s output: %v", name, err)
 	}
 
 	return strings.TrimSpace(string(output))

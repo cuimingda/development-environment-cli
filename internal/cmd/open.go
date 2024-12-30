@@ -15,19 +15,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(openCmd)
-}
-
-var openCmd = &cobra.Command{
+var openCommand = &cobra.Command{
 	Use:   "open",
 	Short: "进入当前目录的开发模式",
-	Run: func(cmd *cobra.Command, args []string) {
-		handleOpenCommand()
-	},
+	Run:   handleOpenCommand,
 }
 
-func handleOpenCommand() {
+func init() {
+	rootCommand.AddCommand(openCommand)
+}
+
+func handleOpenCommand(cmd *cobra.Command, args []string) {
 
 	utils.EnsureMacOS()
 
@@ -105,12 +103,6 @@ func handleOpenCommand() {
 	}
 
 	// 执行 `code .` 命令
-	cmd := exec.Command("code", ".")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("[ERROR] 执行 `code .` 失败: %v\n", err)
-		return
-	}
+	utils.ExecuteCommand("code", ".")
 
 }

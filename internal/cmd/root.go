@@ -8,19 +8,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
+var rootCommand = &cobra.Command{
 	Use:   "dev",
 	Short: "a command line tool for developing in docker container",
 }
 
 func init() {
 
-	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
-	rootCmd.PersistentFlags().BoolVarP(&utils.Verbose, "verbose", "v", false, "verbose output 1")
+	rootCommand.Root().CompletionOptions.DisableDefaultCmd = true
+	rootCommand.PersistentFlags().BoolVarP(&utils.Verbose, "verbose", "v", false, "verbose output 1")
 }
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := rootCommand.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

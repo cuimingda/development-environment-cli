@@ -8,72 +8,65 @@ import (
 
 var Verbose bool
 
-func PrintVerboseMessage(message string) {
+func PrintActionLog(message string) {
 	if Verbose {
-		log.Printf("[Verbose] %s", message)
+		log.Println(message)
 	}
 }
 
-func printMessageLog(message string) {
-	log.Println(message)
+func PrintInfoLog(message string) {
+	if Verbose {
+		log.Println(message)
+	}
 }
 
-func printErrorLog(err error) {
-	log.Printf("错误: %v", err)
+func PrintSuccessLog(message string) {
+	if Verbose {
+		log.Println(message)
+	}
+}
+
+func PrintErrorLog(message string) {
+	if Verbose {
+		log.Println(message)
+	}
+}
+
+func PrintFormatLog(format string, args ...any) {
+	if Verbose {
+		message := fmt.Sprintf(format, args...)
+		log.Println(message)
+	}
+}
+
+func PrintInfoMessage(message string) {
+	fmt.Println(message)
+}
+
+func PrintSuccessMessage(message string) {
+	fmt.Println(message)
+}
+
+func PrintErrorMessage(message string) {
+	fmt.Println(message)
+}
+
+func PrintFormatMessage(format string, args ...any) {
+	message := fmt.Sprintf(format, args...)
+	fmt.Println(message)
+}
+
+func FatalWithFormatMessage(format string, args ...any) {
+	color := "\033[31m"
+	reset := "\033[0m"
+	message := fmt.Sprintf(format, args...)
+	fmt.Printf("[FATAL] %s%s%s\n", color, message, reset)
+	os.Exit(1)
 }
 
 func fatalError(err error, message string) {
 	if err != nil {
-		printMessageLog(message)
-		printErrorLog(err)
+		PrintFormatMessage("[FATAL] %s: %v", message, err)
 		exitWithError()
 	}
-}
-
-func printError(format string, args ...any) {
-	printColored("red", format, args...)
-}
-
-func printSuccess(format string, args ...any) {
-	printColored("green", format, args...)
-}
-
-func printColored(color string, format string, args ...any) {
-	message := fmt.Sprintf(format, args...)
-	colorizeMessage := colorize(message, color)
-	fmt.Println(colorizeMessage)
-}
-
-func colorize(message string, color string) string {
-	var colorCode string
-
-	switch color {
-	case "red":
-		colorCode = "\033[31m"
-	case "green":
-		colorCode = "\033[32m"
-	default:
-		colorCode = ""
-	}
-
-	if colorCode == "" {
-		return message
-	}
-
-	return fmt.Sprintf("%s%s\033[0m", colorCode, message)
-}
-
-func fatalWithFormatMessage(format string, args ...interface{}) {
-	color := "\033[31m"
-	reset := "\033[0m"
-	message := fmt.Sprintf(format, args...)
-	fmt.Printf("[FATAL] %s%s%s\n", color, message, reset)
-	os.Exit(1)
-}
-
-func fatalWithMessage(message string) {
-	color := "\033[31m"
-	reset := "\033[0m"
-	fmt.Printf("[FATAL] %s%s%s\n", color, message, reset)
-	os.Exit(1)
 }

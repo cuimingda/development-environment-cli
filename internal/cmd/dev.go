@@ -6,19 +6,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(devCmd)
-}
-
-var devCmd = &cobra.Command{
+var dotCommand = &cobra.Command{
 	Use:   ".",
 	Short: "进入当前目录的开发模式",
-	Run: func(cmd *cobra.Command, args []string) {
-		handleDevCommand()
-	},
+	Run:   handleDotCommand,
 }
 
-func handleDevCommand() {
+func init() {
+	rootCommand.AddCommand(dotCommand)
+}
+
+func handleDotCommand(cmd *cobra.Command, args []string) {
 
 	utils.EnsureMacOS()
 

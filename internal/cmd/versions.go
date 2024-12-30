@@ -9,8 +9,30 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var versionsCommand = &cobra.Command{
+	Use:   "versions",
+	Short: "显示所有安装包的版本",
+	Run:   HandleVersionsCommand,
+}
+
 func init() {
-	rootCmd.AddCommand(versionCmd)
+	rootCommand.AddCommand(versionsCommand)
+}
+
+func HandleVersionsCommand(cmd *cobra.Command, args []string) {
+
+	utils.PrintActionLog("检查命令...")
+
+	checkCommand("docker", "--version")
+	checkCommand("git", "--version")
+	checkCommand("node", "--version")
+	checkCommand("npm", "--version")
+	checkCommand("curl", "--version")
+	checkCommand("gh", "--version")
+	checkCommand("go", "version")
+	checkCommand("go1", "version")
+
+	utils.PrintActionLog("检查完成")
 }
 
 func checkCommand(name string, arg string) {
@@ -40,28 +62,4 @@ func checkCommand(name string, arg string) {
 	}
 
 	fmt.Printf("%s: %s", name, version)
-}
-
-var versionCmd = &cobra.Command{
-	Use:   "versions",
-	Short: "显示所有安装包的版本",
-	Run:   HandleVersionsCommand,
-}
-
-func HandleVersionsCommand(cmd *cobra.Command, args []string) {
-
-	// 检查命令
-
-	utils.PrintVerboseMessage("检查命令...")
-
-	checkCommand("docker", "--version")
-	checkCommand("git", "--version")
-	checkCommand("node", "--version")
-	checkCommand("npm", "--version")
-	checkCommand("curl", "--version")
-	checkCommand("gh", "--version")
-	checkCommand("go", "version")
-	checkCommand("go1", "version")
-
-	utils.PrintVerboseMessage("检查完成")
 }
