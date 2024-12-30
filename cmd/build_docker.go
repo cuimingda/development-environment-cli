@@ -7,18 +7,18 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(buildSelfCommand)
+	rootCmd.AddCommand(buildDockerCommand)
 }
 
-var buildSelfCommand = &cobra.Command{
-	Use:   "build-self",
+var buildDockerCommand = &cobra.Command{
+	Use:   "build-docker",
 	Short: "编译docker",
 	Run: func(cmd *cobra.Command, args []string) {
-		handleBuildSelfCommand()
+		handleBuildDockerCommand()
 	},
 }
 
-func handleBuildSelfCommand() {
+func handleBuildDockerCommand() {
 
 	utils.EnsureMacOS()
 	utils.EnsurePath(".git")
@@ -26,4 +26,5 @@ func handleBuildSelfCommand() {
 	utils.EnsureGitRemoteOrigin("git@github.com:cuimingda/development-environment-cli.git")
 
 	utils.ExecuteCommand("docker", "build", "--tag", "cuimingda/development-environment:latest", ".")
+	utils.ExecuteCommand("go", "build", "-o", "bin/dev", ".")
 }
