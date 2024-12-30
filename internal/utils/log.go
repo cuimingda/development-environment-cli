@@ -9,27 +9,23 @@ var Verbose bool
 func PrintActionLog(format string, args ...any) {
 	if Verbose {
 		log.Printf(format, args...)
-		log.Println()
 	}
 }
 
 func PrintInfoLog(format string, args ...any) {
 	if Verbose {
 		log.Printf(format, args...)
-		log.Println()
 	}
 }
 
 func PrintSuccessLog(format string, args ...any) {
 	if Verbose {
 		log.Printf(format, args...)
-		log.Println()
 	}
 }
 
 func PrintErrorLog(format string, args ...any) {
 	if Verbose {
 		log.Printf(format, args...)
-		log.Println()
 	}
 }

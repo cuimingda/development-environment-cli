@@ -7,7 +7,7 @@ func ensure(condition bool, format string, args ...any) {
 
 func EnsureCommand(command string) {
 	ensure(
-		isCommandAvailable(command),
+		IsCommandAvailable(command),
 		"命令 %s 未安装",
 		command,
 	)
@@ -15,7 +15,7 @@ func EnsureCommand(command string) {
 
 func EnsurePath(path string) {
 	ensure(
-		isPathAvailable(path),
+		IsPathAvailable(path),
 		"文件或目录 %s 不存在",
 		path,
 	)
@@ -23,7 +23,7 @@ func EnsurePath(path string) {
 
 func EnsureAlpine() {
 	ensure(
-		isAlpine(),
+		IsAlpine(),
 		"当前系统不是 %s",
 		"Alpine Linux",
 	)
@@ -31,7 +31,7 @@ func EnsureAlpine() {
 
 func EnsureMacOS() {
 	ensure(
-		isMacOS(),
+		IsMacOS(),
 		"当前系统不是 %s",
 		"MacOS",
 	)
@@ -39,7 +39,7 @@ func EnsureMacOS() {
 
 func EnsureGitRemoteOrigin(url string) {
 	ensure(
-		isGitRemoteOrigin(url),
+		IsGitRemoteOrigin(url),
 		"当前git项目的remote origin不是 %s",
 		url,
 	)
