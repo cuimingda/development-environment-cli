@@ -6,18 +6,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var openCommand = &cobra.Command{
-	Use:   "open [dir]",
+var codeCommand = &cobra.Command{
+	Use:   "code [dir]",
 	Short: "用vscode打开指定目录",
 	Args:  cobra.ExactArgs(1),
-	Run:   handleOpenCommand,
+	Run:   handleCodeCommand,
 }
 
 func init() {
-	rootCommand.AddCommand(openCommand)
+	rootCommand.AddCommand(codeCommand)
 }
 
-func handleOpenCommand(cmd *cobra.Command, args []string) {
+func handleCodeCommand(cmd *cobra.Command, args []string) {
 
 	utils.EnsureMacOS()
 
