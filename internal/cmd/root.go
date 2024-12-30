@@ -22,6 +22,6 @@ func init() {
 func Execute() {
 	if err := rootCommand.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		utils.ExitWithFailure()
 	}
 }

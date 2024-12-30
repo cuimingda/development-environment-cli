@@ -16,16 +16,16 @@ var DisableDockerImage bool
 
 func init() {
 	rootCommand.AddCommand(buildCommand)
-	buildCommand.Flags().BoolVarP(&DisableLocalBinary, "disable-local-binary", "", false, "not to build to local bin")
-	buildCommand.Flags().BoolVarP(&DisableDockerImage, "disable-docker-image", "", false, "not to build docker image")
+	buildCommand.Flags().BoolVar(&DisableLocalBinary, "disable-local-binary", false, "not to build to local bin")
+	buildCommand.Flags().BoolVar(&DisableDockerImage, "disable-docker-image", false, "not to build docker image")
 }
 
 func handleBuildCommand(cmd *cobra.Command, args []string) {
 
 	utils.PrintActionLog("开始构建")
 
-	utils.PrintFormatLog("DisableLocalBinary: %v\n", DisableLocalBinary)
-	utils.PrintFormatLog("DisableDockerImage: %v\n", DisableDockerImage)
+	utils.PrintInfoLog("DisableLocalBinary: %v\n", DisableLocalBinary)
+	utils.PrintInfoLog("DisableDockerImage: %v\n", DisableDockerImage)
 
 	utils.EnsurePath(".git")
 	utils.EnsurePath("Dockerfile")

@@ -1,72 +1,35 @@
+// 基于语义对log进行二次封装
+// 认为规则：所有的log都受verbose控制
 package utils
 
-import (
-	"fmt"
-	"log"
-	"os"
-)
+import "log"
 
 var Verbose bool
 
-func PrintActionLog(message string) {
+func PrintActionLog(format string, args ...any) {
 	if Verbose {
-		log.Println(message)
+		log.Printf(format, args...)
+		log.Println()
 	}
 }
 
-func PrintInfoLog(message string) {
+func PrintInfoLog(format string, args ...any) {
 	if Verbose {
-		log.Println(message)
+		log.Printf(format, args...)
+		log.Println()
 	}
 }
 
-func PrintSuccessLog(message string) {
+func PrintSuccessLog(format string, args ...any) {
 	if Verbose {
-		log.Println(message)
+		log.Printf(format, args...)
+		log.Println()
 	}
 }
 
-func PrintErrorLog(message string) {
+func PrintErrorLog(format string, args ...any) {
 	if Verbose {
-		log.Println(message)
-	}
-}
-
-func PrintFormatLog(format string, args ...any) {
-	if Verbose {
-		message := fmt.Sprintf(format, args...)
-		log.Println(message)
-	}
-}
-
-func PrintInfoMessage(message string) {
-	fmt.Println(message)
-}
-
-func PrintSuccessMessage(message string) {
-	fmt.Println(message)
-}
-
-func PrintErrorMessage(message string) {
-	fmt.Println(message)
-}
-
-func PrintFormatMessage(format string, args ...any) {
-	message := fmt.Sprintf(format, args...)
-	fmt.Println(message)
-}
-
-func FatalWithFormatMessage(format string, args ...any) {
-	color := "\033[31m"
-	reset := "\033[0m"
-	message := fmt.Sprintf(format, args...)
-	fmt.Printf("[FATAL] %s%s%s\n", color, message, reset)
-	os.Exit(1)
-}
-
-func fatalError(err error, message string) {
-	if err != nil {
-		PrintFormatMessage("[FATAL] %s: %v", message, err)
-		exitWithError()
+		log.Printf(format, args...)
+		log.Println()
 	}
 }
