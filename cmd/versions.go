@@ -50,6 +50,9 @@ var versionCmd = &cobra.Command{
 func HandleVersionsCommand(cmd *cobra.Command, args []string) {
 
 	// 检查命令
+
+	printVerboseMessage("检查命令...")
+
 	checkCommand("docker", "--version")
 	checkCommand("git", "--version")
 	checkCommand("node", "--version")
@@ -58,4 +61,6 @@ func HandleVersionsCommand(cmd *cobra.Command, args []string) {
 	checkCommand("gh", "--version")
 	checkCommand("go", "version")
 	checkCommand("go1", "version")
+
+	printVerboseMessage("检查完成")
 }

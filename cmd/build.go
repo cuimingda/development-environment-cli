@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"development-environment-cli/internal/utils"
-	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -21,10 +20,13 @@ var buildCommand = &cobra.Command{
 
 func handleBuildCommand() {
 
+	printVerboseMessage("开始构建")
+
 	utils.EnsureMacOS()
 	utils.EnsurePath(".git")
 	utils.EnsureCommand("go")
 
 	utils.ExecuteCommand("go", "build", "-o", "bin/dev", ".")
-	fmt.Println("构建成功")
+
+	printVerboseMessage("构建完成")
 }
