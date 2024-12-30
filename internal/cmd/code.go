@@ -9,15 +9,17 @@ import (
 var codeCommand = &cobra.Command{
 	Use:   "code [dir]",
 	Short: "用vscode打开指定目录",
-	Args:  cobra.ExactArgs(1),
-	Run:   handleCodeCommand,
+	Run: func(cmd *cobra.Command, args []string) {
+		utils.FatalIf(len(args) < 1, "Usage: dev code <dir>")
+		handleCodeCommand(cmd, args)
+	},
 }
 
 func init() {
 	rootCommand.AddCommand(codeCommand)
 }
 
-func handleCodeCommand(cmd *cobra.Command, args []string) {
+func handleCodeCommand(_ *cobra.Command, args []string) {
 
 	utils.EnsureMacOS()
 
