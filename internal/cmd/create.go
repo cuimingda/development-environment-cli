@@ -19,10 +19,8 @@ func init() {
 
 func handleCreateCommand(_ *cobra.Command, args []string) error {
 
-	err := utils.EnsureCommandArgsLength(args, 1)
-
-	if err != nil {
-		return fmt.Errorf("error: %v", err)
+	if err := utils.EnsureCommandArgsLength(args, 1); err != nil {
+		return err
 	}
 
 	fmt.Println("create command called")
