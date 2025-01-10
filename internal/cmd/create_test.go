@@ -13,11 +13,6 @@ func TestHandleCreateCommand(t *testing.T) {
 	rootCmd := &cobra.Command{Use: "root"}
 	rootCmd.AddCommand(createCommand)
 
-	// 测试用例
-	// tests := []utils.CommandTestCase{
-	// 	{[]string{"create", "myproject"}, true},
-	// 	{[]string{"create"}, false},
-	// }
 	tests := []utils.CommandTestCase{
 		{Args: []string{"create", "myproject"}, ExpectSuccess: true},
 		{Args: []string{"create"}, ExpectSuccess: false},
