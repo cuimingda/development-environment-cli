@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/spf13/cobra"
+	"github.com/stretchr/testify/assert"
 )
 
 // 定义一个通用的测试用例结构体
@@ -52,13 +53,9 @@ func RunTests(t *testing.T, tests []TestCase) {
 			err, _ := result[0].Interface().(error)
 
 			if test.expectSuccess {
-				if err != nil {
-					t.Errorf("%s returned error: %v", testName, err)
-				}
+				assert.NoErrorf(t, err, "%s returned error: %v", testName, err)
 			} else {
-				if err == nil {
-					t.Errorf("%s did not return error as expected", testName)
-				}
+				assert.Errorf(t, err, "%s did not return error as expected", testName)
 			}
 		})
 	}
@@ -80,13 +77,9 @@ func RunCommandTests(t *testing.T, rootCmd *cobra.Command, tests []CommandTestCa
 
 		// 检查错误
 		if test.ExpectSuccess {
-			if err != nil {
-				t.Errorf("expected no error for args %v, but got %v", test.Args, err)
-			}
+			assert.NoError(t, err, "expected no error for args %v, but got %v", test.Args, err)
 		} else {
-			if err == nil {
-				t.Errorf("expected error for args %v, but got none", test.Args)
-			}
+			assert.Error(t, err, "expected error for args %v, but got none", test.Args)
 		}
 	}
 }
