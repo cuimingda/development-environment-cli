@@ -20,7 +20,6 @@ func init() {
 }
 
 func handleCodeCommand(_ *cobra.Command, args []string) {
-
 	utils.EnsureMacOS()
 
 	utils.EnsureCommand("git")
@@ -32,8 +31,8 @@ func handleCodeCommand(_ *cobra.Command, args []string) {
 	utils.FatalIf(dir == "", "目录参数不能为空")
 
 	utils.PrintInfoLog("IsPathAvailable: %v", utils.IsPathAvailable(dir))
-	if !utils.IsPathAvailable(dir) {
 
+	if !utils.IsPathAvailable(dir) {
 		yes := utils.ConfirmYesOrNo("目录 %s 不存在，是否创建？ ", dir)
 		utils.FatalIfNot(yes, "操作已取消")
 		utils.PrintInfoLog("yes: %v", yes)

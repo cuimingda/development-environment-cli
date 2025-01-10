@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 定义一个通用的测试用例结构体
+// 定义一个通用的测试用例结构体.
 type TestCase struct {
 	fn            interface{}
 	expectSuccess bool
@@ -25,7 +25,7 @@ type CommandTestCase struct {
 	ExpectSuccess bool
 }
 
-// 通用的测试辅助函数
+// 通用的测试辅助函数.
 func RunTests(t *testing.T, tests []TestCase) {
 	for _, test := range tests {
 		// 格式化测试名称为调用的参数列表
@@ -45,10 +45,12 @@ func RunTests(t *testing.T, tests []TestCase) {
 		t.Run(testName, func(t *testing.T) {
 			// 使用反射调用函数
 			fn := reflect.ValueOf(test.fn)
+
 			in := make([]reflect.Value, len(test.args))
 			for i, arg := range test.args {
 				in[i] = reflect.ValueOf(arg)
 			}
+
 			result := fn.Call(in)
 			err, _ := result[0].Interface().(error)
 
@@ -61,7 +63,7 @@ func RunTests(t *testing.T, tests []TestCase) {
 	}
 }
 
-// 通用的命令测试辅助函数
+// 通用的命令测试辅助函数.
 func RunCommandTests(t *testing.T, rootCmd *cobra.Command, tests []CommandTestCase) {
 	for _, test := range tests {
 		// 重置输出缓冲区
@@ -86,5 +88,6 @@ func RunCommandTests(t *testing.T, rootCmd *cobra.Command, tests []CommandTestCa
 
 func getFunctionName(i interface{}) string {
 	fullName := runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
+
 	return path.Base(fullName)
 }

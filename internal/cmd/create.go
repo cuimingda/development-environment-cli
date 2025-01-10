@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"development-environment-cli/internal/utils"
 	"fmt"
+
+	"development-environment-cli/internal/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -18,11 +19,11 @@ func init() {
 }
 
 func handleCreateCommand(_ *cobra.Command, args []string) error {
-
 	if err := utils.EnsureCommandArgsLength(args, 1); err != nil {
 		return err
 	}
 
 	fmt.Println("create command called")
+
 	return nil
 }

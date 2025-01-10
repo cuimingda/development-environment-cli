@@ -7,7 +7,6 @@ import (
 )
 
 func ExecuteCommandWithOutput(name string, arg ...string) string {
-
 	EnsureCommand(name)
 
 	cmd := exec.Command(name, arg...)

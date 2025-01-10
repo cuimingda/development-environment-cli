@@ -1,9 +1,10 @@
 package cmd
 
 import (
-	"development-environment-cli/internal/utils"
 	"fmt"
 	"os"
+
+	"development-environment-cli/internal/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -14,7 +15,6 @@ var rootCommand = &cobra.Command{
 }
 
 func init() {
-
 	rootCommand.Root().CompletionOptions.DisableDefaultCmd = true
 	rootCommand.PersistentFlags().BoolVarP(&utils.Verbose, "verbose", "v", false, "verbose output 1")
 }

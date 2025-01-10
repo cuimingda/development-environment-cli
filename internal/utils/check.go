@@ -10,11 +10,13 @@ import (
 
 func IsCommandAvailable(command string) bool {
 	_, err := exec.LookPath(command)
+
 	return err == nil
 }
 
 func IsPathAvailable(path string) bool {
 	_, err := os.Stat(path)
+
 	return !os.IsNotExist(err)
 }
 
@@ -28,5 +30,6 @@ func IsMacOS() bool {
 
 func IsGitRemoteOrigin(expectedURL string) bool {
 	remoteURL := ExecuteCommandWithOutput("git", "config", "--get", "remote.origin.url")
+
 	return remoteURL == expectedURL
 }

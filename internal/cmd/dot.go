@@ -17,7 +17,6 @@ func init() {
 }
 
 func handleDotCommand(cmd *cobra.Command, args []string) {
-
 	utils.EnsureMacOS()
 
 	utils.EnsurePath(".git")

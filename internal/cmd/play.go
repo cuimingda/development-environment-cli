@@ -20,7 +20,6 @@ func init() {
 }
 
 func handlePlayCommand(cmd *cobra.Command, args []string) {
-
 	utils.EnsureMacOS()
 
 	utils.FatalIf(Image == "", "image is required")

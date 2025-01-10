@@ -22,7 +22,6 @@ func init() {
 }
 
 func handleWebCommand(cmd *cobra.Command, args []string) {
-
 	utils.EnsureMacOS()
 
 	utils.EnsureCommand("code")
